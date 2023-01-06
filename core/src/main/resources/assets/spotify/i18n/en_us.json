@@ -9,6 +9,26 @@
       "name": "Spotify",
       "enabled": {
         "name": "Enabled"
+      },
+      "hotkeySubSettings": {
+        "name": "Hotkeys",
+        "skipSong": {
+          "name": "Skip Song Hotkey"
+        },
+        "pauseSong": {
+          "name": "Pause/Play Hotkey"
+        },
+        "prevSong": {
+          "name": "Previous Song Hotkey"
+        },
+        "showNotifications": {
+          "name": "Show notification on skip/previous song"
+        }
+      },
+      "header": {
+        "hotkeys": {
+          "name": "Hotkey Settings"
+        }
       }
     }
   }
