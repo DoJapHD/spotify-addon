@@ -3,14 +3,16 @@ package net.labymod.addons.spotify.core.listener;
 import de.labystudio.spotifyapi.SpotifyAPI;
 import de.labystudio.spotifyapi.SpotifyAPIFactory;
 import de.labystudio.spotifyapi.model.MediaKey;
-import javax.inject.Inject;
 import net.labymod.addons.spotify.core.SpotifyAddon;
 import net.labymod.addons.spotify.core.SpotifyConfiguration;
 import net.labymod.addons.spotify.core.notifications.NotificationHandler;
 import net.labymod.addons.spotify.core.notifications.NotificationHandler.NotificationCase;
+import net.labymod.api.client.gui.screen.activity.Activity;
+import net.labymod.api.client.gui.screen.activity.activities.labymod.child.SettingContentActivity;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.input.KeyEvent;
 import net.labymod.api.event.client.input.KeyEvent.State;
+import javax.inject.Inject;
 
 public class KeyListener {
 
@@ -26,7 +28,6 @@ public class KeyListener {
     notiHandler = new NotificationHandler(addon);
   }
 
-  //!Braucht noch Deaktivierung während Settings!
   @Subscribe
   public void keyPressed(KeyEvent event) {
 
@@ -36,12 +37,15 @@ public class KeyListener {
       if (!config.enabled().get() || !config.hotkeySubSettings().enabled().get()) {
         return;
       }
-      /*if(event.key().equals(config.hotkeySubSettings().prevSongKey().get())) {
-        System.out.println(Arrays.toString(this.addon.labyAPI().ingameOverlay().getActivities().toArray()));
-
-      }*/
 
       if (event.state() == State.UNPRESSED) {
+
+        Activity openActivity = this.addon.labyAPI().minecraft().minecraftWindow()
+            .findOpenActivity(activity -> activity instanceof SettingContentActivity);
+        if (openActivity != null && openActivity.isOpen()) {
+          return;
+        }
+
         this.addon.logger().info("connected:" + api.isConnected());
         if (event.key().equals(config.hotkeySubSettings().skipSongKey().get())) {
           this.addon.logger().info("Skip song");
@@ -87,8 +91,8 @@ public class KeyListener {
       //Fire notification to (re-)start Spotify as the API isn't connected
       if (!api.isConnected()) {
         notiHandler.createNotification(NotificationCase.ERROR, 400 * 7L, "N/A");
-        this.addon.logger().error("" + e);
       }
+      this.addon.logger().error("" + e.getMessage());
     }
   }
 }

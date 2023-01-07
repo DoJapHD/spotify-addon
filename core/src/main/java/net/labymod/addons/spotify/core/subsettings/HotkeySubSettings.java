@@ -6,6 +6,7 @@ import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.Switc
 import net.labymod.api.configuration.loader.Config;
 import net.labymod.api.configuration.loader.annotation.ParentSwitch;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
+import net.labymod.api.configuration.settings.annotation.SettingSection;
 import net.labymod.api.util.MethodOrder;
 
 public class HotkeySubSettings extends Config {
@@ -13,6 +14,8 @@ public class HotkeySubSettings extends Config {
   @ParentSwitch
   @SwitchSetting
   private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(false);
+
+  @SettingSection("info")
 
   @MethodOrder(after = "enabled")
   @KeyBindSetting

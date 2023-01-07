@@ -23,6 +23,11 @@
         },
         "showNotifications": {
           "name": "Show notification on skip/previous song"
+        },
+        "header": {
+          "info": {
+            "name": "§7Info:\n§7Hotkeys are disabled while LabyMod Settings are open\n "
+          }
         }
       },
       "header": {
